@@ -11,6 +11,3 @@ jQuery
 Bootstrap
 
 Logo file included in the zip and hosted on server.
-
-Execution:
-Run the Perfect_Timing.html file.
