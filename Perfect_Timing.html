@@ -1,0 +1,474 @@
+<html>
+<head>
+  <title>Perfect Timing</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	var days_clock1 = 0;	
+	var hours_clock1 = 0;
+	var minutes_clock1 = 0;
+	var seconds_clock1 = 0;
+	var days_clock2 = 0;
+	var hours_clock2 = 0;
+	var minutes_clock2 = 0;
+	var seconds_clock2 = 0;
+	var count_target = 0;
+	var val_clock1 = 0;
+	var pause_clock1;
+	var val_clock2 = count_target;
+	var pause_clock2;
+	
+	
+	
+	function targetChange()
+	{
+		var target = document.getElementById("Target").value;
+		if(target < 0)
+		{
+			alert("Targeted value is Negative. Please enter a positive number to begin");
+			return;
+		}
+		count_target = target;
+		timeStopWatches2(target);
+		init1();
+		init2();
+		reset1();
+		reset2();
+	}
+	function resetval_clock1ue()
+	{
+		clearInterval(pause_clock1);
+		days_clock1 = 0;
+		hours_clock1 = 0;
+		minutes_clock1 = 0;
+		seconds_clock1 = 0;
+		val_clock1 = 0;
+	}
+	function resetval_clock2ue()
+	{
+		clearInterval(pause_clock2);
+		timeStopWatches2(count_target);
+		val_clock2 = count_target;
+	}
+	function init1()
+	{
+		document.getElementById("days_clock1").value = "" + days_clock1 + "";
+		document.getElementById("hours_clock1").value = "" + hours_clock1 + "";
+		document.getElementById("minutes_clock1").value = "" + minutes_clock1 + "";
+		document.getElementById("seconds_clock1").value = "" + seconds_clock1 + "";
+	}
+	function init2()
+	{
+		document.getElementById("days_clock2").value = "" + days_clock2 + "";
+		document.getElementById("hours_clock2").value = "" + hours_clock2 + "";
+		document.getElementById("minutes_clock2").value = "" + minutes_clock2 + "";
+		document.getElementById("seconds_clock2").value = "" + seconds_clock2 + "";
+	}
+	function updateStopWatch1()
+	{
+		if(val_clock1 == count_target)
+		{
+			alert("Stopwatch 1 ended.");
+			disableOnStopWatch1();
+			clearInterval(pause_clock1);
+		}
+		else
+		{
+			val_clock1 = val_clock1 + 1;
+			seconds_clock1 = seconds_clock1 + 1;
+			if(seconds_clock1 == 60)
+			{
+				seconds_clock1 = 0;
+				minutes_clock1 = minutes_clock1 + 1;
+				if(minutes_clock1 == 60)
+				{
+					minutes_clock1 = 0;
+					hours_clock1 = hours_clock1 + 1;
+					if(hours_clock1 == 24)
+					{
+						hours_clock1 = 0;
+						days_clock1 = days_clock1 + 1;
+					}
+				}
+			}
+			init1();
+		}
+	}
+	function startStopWatch1()
+	{	
+		pause_clock1 = setInterval(updateStopWatch1,1000);
+		document.getElementById("Start1").disabled = true;
+		
+		
+		
+	}
+	function resetStopWatch1()
+	{
+		reset1();
+	}
+	function pauseStopWatch1()
+	{
+		clearInterval(pause_clock1);
+		document.getElementById("Start1").disabled = false;
+	}
+	function reset1()
+	{
+		document.getElementById("Start1").disabled = false;
+		document.getElementById("Pause1").disabled = false;
+		resetval_clock1ue();
+		init1();
+	}
+	function disableOnStopWatch1()
+	{
+		document.getElementById("Start1").disabled = true;
+		document.getElementById("Pause1").disabled = true;
+	}
+	function updateStopWatch2()
+	{
+		if(val_clock2 == 0)
+		{
+			alert("Stopwatch 2 ended.");
+			disableOnStopWatch2();
+			clearInterval(pause_clock2);
+			
+		}
+		else
+		{
+			val_clock2 = val_clock2 - 1;
+			timeStopWatches2(val_clock2);
+			init2();
+		}
+	}
+	function startStopWatch2()
+	{
+		pause_clock2 = setInterval(updateStopWatch2,1000);
+		document.getElementById("Start2").disabled = true;
+		
+	
+	}
+	function timeStopWatches2(targetVal)
+	{
+		days_clock2 = Math.floor(targetVal / (24*60*60));
+		days = targetVal % (24*60*60);
+		hours_clock2 = Math.floor(days/(60*60));
+		hours = targetVal % (60*60);
+		minutes_clock2 = Math.floor(hours/60);
+		minutes = targetVal % 60;
+		seconds_clock2 = Math.floor(minutes);
+	}
+	function pauseStopWatch2()
+	{
+		clearInterval(pause_clock2);
+		document.getElementById("Start2").disabled = false;
+	}
+	function resetStopWatch2()
+	{
+		reset2();
+	}
+	function reset2()
+	{
+		document.getElementById("Start2").disabled = false;
+		document.getElementById("Pause2").disabled = false;
+		resetval_clock2ue();
+		init2();
+	}
+	function disableOnStopWatch2()
+	{
+		document.getElementById("Start2").disabled = true;
+		document.getElementById("Pause2").disabled = true;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+  </script>
+
+
+  
+  
+</head>
+<style>
+
+.panel-body{
+	background:#d9dde2;
+
+}
+
+.wrap {
+width: 100%;
+overflow:auto;
+}
+
+.fleft {
+    float:left; 
+    width: 50%;
+	background:#d9dde2;
+    height: 100%;
+	
+}
+
+.fright {
+float: right;
+    background:#d9dde2;
+    height: 100%;
+    width: 50%;
+	border-left: 1px solid #333;
+	
+}
+
+nav > ul {margin: 0}
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
+
+</style>
+
+
+
+
+ <body>
+
+
+ 
+<ul>
+<img src="https://s23.postimg.org/5t32hcvzv/logo.png" align="left" height="20%">
+
+
+</img>
+  <li>
+  <br>
+  
+  <div class="row">
+					<div class="col-xs-3">
+						<div class="text-right"><label for="stopwatch1"><h5><strong>Your Counting Target:</strong></h5></label></div>
+					</div>
+					<div class="col-sm-4">
+						<input class="form-control text-center" type="number" placeholder="Enter time in seconds" id="Target" name="Target" onchange="targetChange()"/>
+					<br>
+					</div>
+					
+				</div>
+  </li>
+</ul>
+
+
+	
+	
+
+	<div class="fleft">
+	
+<div class="text-center">
+<br>
+					<div class="row">
+					
+					
+					
+						<div class="col-sm-2">
+							<div class="text-right"><label for="stopwatch1"><h5><strong>Countup</strong></h5></label></div>
+						</div>
+						<div class="col-sm-2">
+							<input class="form-control text-center" width="100px" placeholder="00" id="days_clock1" name="days_clock1" disabled/>
+						</div>
+						<div class="col-sm-2">
+							<input class="form-control text-center" placeholder="00" id="hours_clock1" name="hours_clock1" disabled/>
+						</div>
+						<div class="col-sm-2">
+							<input class="form-control text-center" placeholder="00" id="minutes_clock1" name="minutes_clock1" disabled/> 
+						</div>
+						<div class="col-sm-2">
+							<input class="form-control text-center" placeholder="00" id="seconds_clock1" name="seconds_clock1" disabled/>
+						</div>
+						
+
+					</div>
+				</div>
+				<div class="text-center">
+					<div class="row">
+						<div class="col-sm-2">
+							<div class="text-right"><label for="stopwatch1"><h5><strong></strong></h5></label></div>
+						</div>
+						<div class="col-sm-2">
+							<div class="text-center"><label for="stopwatch1"><h5><strong>Days</strong></h5></label></div>
+						</div>
+						<div class="col-sm-2">
+							<div class="text-center"><label for="stopwatch1"><h5><strong>Hours</strong></h5></label></div>
+						</div>
+						<div class="col-sm-2">
+							<div class="text-center"><label for="stopwatch1"><h5><strong>Minutes</strong></h5></label></div>
+						</div>
+						<div class="col-sm-2">
+							<div class="text-center"><label for="stopwatch1"><h5><strong>Seconds</strong></h5></label></div>
+						</div>
+					</div>
+				</div>
+				<br/>
+				
+					
+			
+			
+			
+			<div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse1">Stopwatch 1 Control Panel: Click to Toggle</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse">
+        <div class="panel-body" id="progressbar_1">
+		
+		
+		<div class="text-center">
+					<div class="row-fluid">
+					
+					
+					
+							<button type="button" class="btn btn-success" id="Start1" name="Start1" data-placement="bottom" data-toggle="tooltip" title="Start it" onclick="startStopWatch1()">Start</button>
+							<button type="button" class="btn btn-primary" id="Pause1" name="Pause1" data-placement="bottom" data-toggle="tooltip" title="Pause it" onclick="pauseStopWatch1()">Pause</button>
+							<button type="button" class="btn btn-danger" id="Reset1" name="Reset1" data-placement="bottom" data-toggle="tooltip" title="Reset it" onclick="resetStopWatch1()">Reset</button>
+					
+					
+					
+							<br>
+							<br>
+							
+					</div>
+
+					
+					
+					
+					
+					</div>
+				</div>
+		
+		
+		
+		
+		</div>
+        
+      </div>
+    </div>
+  </div>
+			
+	
+	
+	</div>
+	<div class="fright">
+	
+	<div class="text-center">
+	<br>
+					<div class="row">
+						<div class="col-sm-2">
+							<div class="text-right"><label for="stopwatch2"><h5><strong>Countdown</strong></h5></label></div>
+						</div>
+						<div class="col-sm-2">
+							<input class="form-control text-center" placeholder="00" id="days_clock2" name="days_clock2" disabled/>
+						</div>
+						<div class="col-sm-2">
+							<input class="form-control text-center" placeholder="00" id="hours_clock2" name="hours_clock2" disabled/>
+						</div>
+						<div class="col-sm-2">
+							<input class="form-control text-center" placeholder="00" id="minutes_clock2" name="minutes_clock2" disabled/> 
+						</div>
+						<div class="col-sm-2">
+							<input class="form-control text-center" placeholder="00" id="seconds_clock2" name="seconds_clock2" disabled/>
+						</div>
+					</div>
+				</div>
+				<div class="text-center">
+					<div class="row">
+						<div class="col-sm-2">
+							<div class="text-right"><label for="stopwatch2"><h5><strong></strong></h5></label></div>
+						</div>
+						<div class="col-sm-2">
+							<div class="text-center"><label for="stopwatch2"><h5><strong>Days</strong></h5></label></div>
+						</div>
+						<div class="col-sm-2">
+							<div class="text-center"><label for="stopwatch2"><h5><strong>Hours</strong></h5></label></div>
+						</div>
+						<div class="col-sm-2">
+							<div class="text-center"><label for="stopwatch2"><h5><strong>Minutes</strong></h5></label></div>
+						</div>
+						<div class="col-sm-2">
+							<div class="text-center"><label for="stopwatch2"><h5><strong>Seconds</strong></h5></label></div>
+						</div>
+					</div>
+				</div>
+				<br/>
+				
+				
+				
+				<div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse2">Stopwatch 2 Control Panel: Click to Toggle</a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body">
+		
+		
+		<div class="text-center">
+					<div class="row-fluid">
+					
+					
+					<button type="button" class="btn btn-success" id="Start2" name="Start2" data-placement="bottom" data-toggle="tooltip" title="Start" onclick="startStopWatch2()">Start</button>
+					<button type="button" class="btn btn-primary" id="Pause2" name="Pause2" data-placement="bottom" data-toggle="tooltip" title="Pause" onclick="pauseStopWatch2()">Pause</button>
+					<button type="button" class="btn btn-danger" id="Reset2" name="Reset2" data-placement="bottom" data-toggle="tooltip" title="Reset" onclick="resetStopWatch2()">Reset</button>
+					
+					
+					<br>
+					<br>
+				
+					
+					
+							
+					</div>
+				</div>
+		
+		
+		
+		
+		</div>
+        
+      </div>
+    </div>
+  </div>
+				
+	
+	
+	
+	
+	
+	</div>
+	
+
+     
+
+   
+  </body>
